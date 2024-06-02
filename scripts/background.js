@@ -1,34 +1,9 @@
-// function changeLinkHref () {
-//   // https://link.jianshu.com?t=xxxxxx 简书
-//   // https://links.jianshu.com/go?to=xxxxxx 简书2
-//   // https://link.juejin.cn/?target=xxxxx 掘金
-//   // https://link.zhihu.com/?target=xxxxx 知乎
-//   const links = document.querySelectorAll('a')
-//   const reg = /(?:cn\/\?target|com?\/\?t|com\/\?target|com\/go\?to)=(.*)/
-//   let count = 0;
-//   links.forEach(link => {
-//     const match = reg.exec(link.href)
-//     if(match && match[1]) {
-//       link.href = decodeURIComponent(match[1])
-//       count++
-//     }
-//   })
-//   // csdn是通过添加事件来改写link跳转逻辑的，因此需要移除事件才行
-//   const csdnHack = document.querySelector('#content_views')
-//   if(csdnHack) {
-//     csdnHack.replaceWith(csdnHack.cloneNode(true));
-//     count += csdnHack.querySelectorAll('a').length
-//   }
-//   console.log(`本页面共 ${count} 个外链现在可以直接跳转了 --forceJump插件`)
-// }
-
-var flag = true
-
+//寻找当前项目未完成的课程，自动跳转页面进入该课程学习
 function select(){
   const kc_list = document.querySelectorAll(".course-list-wrap .list-content .list-wrap .mt16")  //(".list-wrap-item mt16")
   for (i = 0; i < kc_list.length; i++) { 
       const progress = kc_list[i].querySelector(".el-progress__text span").innerHTML
-      if ( progress !== "100%" && flag ){
+      if ( progress !== "100%" ){
 
         kc_list[i].querySelector(".title-wrap .title").click()
         return
@@ -52,7 +27,6 @@ function  start () {
     const this_duration = document.querySelectorAll("#app .study-wrap .bottom .right .mr30 span")[0].innerHTML
     // console.log("本次学习时间:" + this_duration)
     var temp = /((\d+)分钟){0,1}(\d+)秒/g.exec(this_duration)
-    const this_study_duration = (temp[2] + temp[3]).replace("undefined","")//如果没有几分则为undefined，需要替换成空字符
     var this_min = 0
     var this_ts = 0
     if(temp[2] !== undefined){
@@ -78,7 +52,7 @@ function  start () {
     console.log("累计学习时间:",total_min,"分",total_ts,"秒")
     const dynamic_total_min = total_min + this_min
     console.log("动态累计学习时间:",dynamic_total_min,"课程要求时间:",kc_time_number)
-    if ( kc_time_number < total_min + this_min ){
+    if ( kc_time_number <= total_min + this_min ){
       console.log("本课程学习结束")
       ////结束学习
       document.querySelectorAll("#app .study-wrap .bottom .right .btn")[0].click()
