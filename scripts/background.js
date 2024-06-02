@@ -10,11 +10,18 @@ function select(){
       }
    }  
 }
+function endStudy(){
+        ////结束学习
+        document.querySelectorAll("#app .study-wrap .bottom .right .btn")[0].click()
+        setTimeout(() => {
+          ////确定结束学习
+          var bl = document.querySelectorAll("button.el-button--primary")
+          bl[bl.length-1].click()
+        }, 5000);
 
+}
 
-function  start () {
-    // const td = document.querySelector("#app").innerText
-    // console.log(td)
+function  start() {
     select()
     //课程时长
     const kc_duration = document.querySelectorAll("#app .content .right .jieshao-wrap .mt20")[3].innerHTML
@@ -36,7 +43,11 @@ function  start () {
       this_ts = Number(temp[3])
     }
     console.log("本次学习时间:",this_min,"分",this_ts,"秒")
-
+    //若本次学习超过10分钟先结束学习，避免时间长了再结束，网络或者登陆状态失效，导致学习时长未记录
+    if(this_min >= 10){
+      endStudy()
+      return
+    }
     //获取累计学习时间
     const study_ts = document.querySelectorAll("#app .study-wrap .bottom .right .mr30 span")[1].innerHTML
     temp = /((\d+)分钟){0,1}((\d+)秒){0,1}/g.exec(study_ts)
@@ -55,15 +66,9 @@ function  start () {
     if ( kc_time_number <= total_min + this_min ){
       console.log("本课程学习结束")
       ////结束学习
-      document.querySelectorAll("#app .study-wrap .bottom .right .btn")[0].click()
-      ////确定结束学习
-      document.querySelectorAll("button.el-button--primary")[0].click()
+      endStudy()
     }else{
-      console.log("本课程还差",kc_time_number - dynamic_total_min,"分钟")
-      ////结束学习
-      // document.querySelectorAll("#app .study-wrap .bottom .right .btn")[0].click()
-      // ////确定结束学习
-      // document.querySelectorAll("button.el-button--primary")[0].click()      
+      console.log("本课程还差",kc_time_number - dynamic_total_min,"分钟")  
     }
 
 }
