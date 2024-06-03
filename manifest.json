@@ -1,7 +1,7 @@
 
 {
   "manifest_version": 3,
-  "name": "auto_study",
+  "name": "自动Next",
   "version": "1.0.0",
   "description": "偷点懒吧，自动改变世界",
   "icons":
@@ -15,54 +15,19 @@
       {
           "24": "images/24x24.png",
           "38": "images/38x38.png"
-      }
+      },
+      "default_popup": "popup/index.html"
   },
   "author": "Stack",
   "content_scripts": [
       {
         "matches": ["http://cas.study.teacheredu.cn/*"],
-        "js": ["scripts/background.js"],
+        "js": ["scripts/main.js"],
         "run_at": "document_end"
       }
   ],
-  "permissions": []
+  "permissions": ["storage", "activeTab", "scripting","tabs"],
+  "background": {
+    "service_worker": "background.js"
+   }
 }
-
-// {
-//     "manifest_version": 3, //插件版本号官方规定  目前是3
-//     "name": "flash-app",  // 插件名称
-//     "version": "1",    // 插件版本
-//     "description": "光落在你脸上",
-//     "icon":{  //插件的图标
-//         "16": "image/icon.png",         
-//         "48": "image/icon.png",            
-//         "128": "image/icon.png" 
-//     },
-//     "browser_action": {
-//         "default_icon": "image/icon.png", // 工具栏上插件图标
-//         "default_popup": "popup.html"  //点击默认弹出的html
-//     },
-//     "background": {
-//         "page": "js/background.js" 
-//     },
-//     "content_scripts": [
-//         {
-//             "matches": [  // 定义哪些页面需要注入content script。
-//                 "<all_urls>" 
-//             ],
-//             "js": [  // 指定注入的js文件地址
-//                 "./src/js/index.js"
-//             ],
-//             "css": [  // 指定注入的css文件地址
-//                 "./src/css/index.css"
-//             ],
-//             "run_at": "document_start"  // 代码注入的时间，可选值： "document_start", "document_end", or "document_idle"，最后一个表示页面空闲时，默认document_idle
-//         }
-//     ]
-
-// }
-
-// 作者：John_Wick_1998
-// 链接：https://juejin.cn/post/7159245439345098788
-// 来源：稀土掘金
-// 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。

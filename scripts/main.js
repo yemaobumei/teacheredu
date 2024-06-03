@@ -1,14 +1,26 @@
+// // 定义颜色
+// let color = '#3aa757';
+
+// // 首次安装插件、插件更新、chrome浏览器更新时触发
+// chrome.runtime.onInstalled.addListener(() => {
+//   chrome.storage.sync.set({ color });
+//   console.log('插件默认颜色为: %c #3aa757', `color: ${color}`);
+// });
+
 //寻找当前项目未完成的课程，自动跳转页面进入该课程学习
 function select(){
-  const kc_list = document.querySelectorAll(".course-list-wrap .list-content .list-wrap .mt16")  //(".list-wrap-item mt16")
-  for (i = 0; i < kc_list.length; i++) { 
-      const progress = kc_list[i].querySelector(".el-progress__text span").innerHTML
-      if ( progress !== "100%" ){
-
-        kc_list[i].querySelector(".title-wrap .title").click()
-        return
-      }
-   }  
+  const pages = document.querySelectorAll(".number")
+  for (j = 0; j < pages.length; j++) {
+    pages[j].click() //切换页面
+    var kc_list = document.querySelectorAll(".course-list-wrap .list-content .list-wrap .mt16")  //(".list-wrap-item mt16")
+    for (i = 0; i < kc_list.length; i++) { 
+        var progress = kc_list[i].querySelector(".el-progress__text span").innerHTML
+        if ( progress !== "100%" ){
+          kc_list[i].querySelector(".title-wrap .title").click()
+          return
+        }
+    }
+  }    
 }
 function endStudy(){
         ////结束学习
