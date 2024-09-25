@@ -77,16 +77,17 @@ function  start() {
       ////结束学习
       endStudy()
     }else{
-      console.log("本课程还差",kc_time_number - dynamic_total_min,"分钟")
+      var rest_min = kc_time_number - dynamic_total_min
+      console.log("本课程还差",rest_min,"分钟")
       var url = window.location.href
       var id = 0
       var temp = /id=(\d+)/g.exec(url)
       if(temp !== undefined){
         id = temp[1]
-        if (this_min >= 1){ //超过1分钟才记录时长
-          saveStudyTime(id)
-          window.location.href = "http://cas.study.teacheredu.cn/auth/selfHost/studyPlace/index.html#/stu/newCourse/list?ptCode=34601&stageId=0&menuRefId=190995&isOption="
-          //endStudy()
+        if (this_min >= 0){ //超过1分钟才记录时长
+          saveStudyTime(id,(rest_min+3)*60 + Math.floor(Math.random()*(1800))  )
+          // window.location.href = "http://cas.study.teacheredu.cn/auth/selfHost/studyPlace/index.html#/stu/newCourse/list?ptCode=34601&stageId=0&menuRefId=190995&isOption="
+          endStudy()
         }
 
       }  
@@ -94,13 +95,13 @@ function  start() {
 
 }
 
-function saveStudyTime(id){
+function saveStudyTime(id,time_ts){
   const url = "http://cas.study.teacheredu.cn/api/newCourse/saveStudyTime"
   var data = {
       "check": true,
       "stageId": "0",
       "courseId": id,//"52919",
-      "studyTime": 300,
+      "studyTime": time_ts,
       "category": "1",
       "limit": null
     }

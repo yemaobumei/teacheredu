@@ -1,7 +1,7 @@
 
 {
   "manifest_version": 3,
-  "name": "自动Next",
+  "name": "教师教育网自动Next",
   "version": "1.0.0",
   "description": "偷点懒吧，自动改变世界",
   "icons":
@@ -22,12 +22,16 @@
   "content_scripts": [
       {
         "matches": ["http://cas.study.teacheredu.cn/*"],
-        "js": ["scripts/main.js"],
+        "js": ["scripts/zhuru.js"],
         "run_at": "document_end"
       }
   ],
   "permissions": ["storage", "activeTab", "scripting","tabs"],
   "background": {
     "service_worker": "background.js"
-   }
+   },
+   "web_accessible_resources": [{ 
+    "resources": ["js/inject.js"],
+    "matches": ["<all_urls>"]
+  }]   
 }
